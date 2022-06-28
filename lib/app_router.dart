@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:breaking_bad_app/business_logic/cubit/characters_cubit.dart';
 import 'package:breaking_bad_app/constant/strings.dart';
@@ -6,8 +5,11 @@ import 'package:breaking_bad_app/data/repository/characters_repository.dart';
 import 'package:breaking_bad_app/data/web_services/characters_web_services.dart';
 import 'package:breaking_bad_app/presentation/screens/characters_details_screen.dart';
 import 'package:breaking_bad_app/presentation/screens/characters_screen.dart';
+import 'package:breaking_bad_app/presentation/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'data/models/characters.dart';
 
 class AppRouter {
 
@@ -28,7 +30,14 @@ class AppRouter {
         child: CharactersScreen(),
         ));
       case characterDetailsRoute:
-        return MaterialPageRoute(builder: (_)=>CharactersDetailsScreen());
+        final Character character=settings.arguments as Character;
+        return MaterialPageRoute(builder: (_)=>CharactersDetailsScreen(character:character,));
+      case searchRoute:
+        return MaterialPageRoute(builder: (_) => BlocProvider(create: (context){
+          return charactersCubit;
+        },
+          child: SearchScreen(),
+        ));
     }
   }
 }

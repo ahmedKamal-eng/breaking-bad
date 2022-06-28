@@ -8,16 +8,30 @@ import '../../data/repository/characters_repository.dart';
 
 class CharactersCubit extends Cubit<CharactersState>{
   final CharactersRepository charactersRepository;
-  late List<Character> characters;
+  List<Character> characters = [];
 
-  CharactersCubit(this.charactersRepository):super(CharacterInitial());
+  CharactersCubit(this.charactersRepository) : super(CharacterInitial());
 
-  List<Character> getAllCharacters(){
-    charactersRepository.getAllCharacters().then((character) {
-      emit(CharactersLoad(characters));
-      this.characters =character;
+  List<Character> getAllCharacters() {
+    charactersRepository.getAllCharacters().then((characters) {
+      // emit(CharactersLoad(characters));
+
+      this.characters = characters;
+      emit(CharactersLoad());
+    }).catchError((e){
+      emit(CharacterLoadError());
     });
+
     return characters;
+  }
+
+
+  // Search section
+List<Character> searchCharacter=[];
+
+  void search({required String str}){
+     searchCharacter= this.characters.where((character) => character.name.toLowerCase().startsWith(str)).toList();
+
   }
 
 

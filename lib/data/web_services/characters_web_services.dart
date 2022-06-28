@@ -14,19 +14,29 @@ class CharactersWebServices{
     );
     dio= Dio(baseOptions);
   }
-  
-  Future<List<dynamic>?> getAllCharacters() async{
+  //
+  // Future<List<dynamic>> getAllCharacters() async{
+  //
+  //   dio.get('characters').then((value) {
+  //    Response  response=value;
+  //     print(response.data.toString());
+  //     return response.data;
+  //   }).catchError((e){
+  //     print(e.toString());
+  //   });
+  //
+  // }
 
-   late Response response;
 
-    dio.get('characters').then((value) {
-      response=value;
+  Future<List<dynamic>> getAllCharacters() async {
+    try {
+      Response response = await dio.get('characters');
       print(response.data.toString());
+      print('hello');
       return response.data;
-    }).catchError((e){
+    } catch (e) {
       print(e.toString());
-    });
+      return [];
+    }  }
 
-  }
-  
 }
