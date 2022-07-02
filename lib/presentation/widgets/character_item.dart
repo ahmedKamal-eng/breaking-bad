@@ -23,12 +23,15 @@ class CharacterItem extends StatelessWidget {
           child: Container(
             color: MyColors.myGrey,
             child: character.image.isNotEmpty
-                ? FadeInImage.assetNetwork(
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                    placeholder: 'assets/images/loading.gif',
-                    image: character.image)
+                ? Hero(
+                 tag: '${character.name}',
+                  child: FadeInImage.assetNetwork(
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      placeholder: 'assets/images/loading.gif',
+                      image: character.image),
+                )
                 : Image.asset('assets/images/placeholder.png'),
           ),
           footer: Container(
